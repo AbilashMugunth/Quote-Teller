@@ -7,6 +7,7 @@ const loader = document.getElementById("loader");
 
 const button = document.getElementsByClassName("button");
 const audioElement = document.getElementById("audio");
+console.log(audioElement);
 
 let apiQuotes = [];
 
@@ -20,6 +21,12 @@ function loading() {
 function complete() {
   quoteContainer.hidden = false;
   loader.hidden = true;
+}
+
+// Disable/Enable Button
+function toggleButton() {
+  console.log("hiiii");
+  button.disabled = !button.disabled;
 }
 
 // Show New Quote
@@ -42,9 +49,9 @@ function newQuote() {
   }
   // Set Quote, Hide Loader
   quoteText.textContent = quote.text;
-  tellMe(quote);
 
   complete();
+  tellMe(quote);
 }
 
 // VoiceRSS Speech Function
@@ -86,13 +93,51 @@ function tweetQuote() {
 // Event Listeners
 newQuoteBtn.addEventListener("click", newQuote);
 twitterBtn.addEventListener("click", tweetQuote);
+// console.log(toggleButton);
+audioElement.addEventListener("ended", toggleButton);
 
 // On Load
 getQuotes();
 
-// Disable/Enable Button
-function toggleButton() {
-  button.disabled = !button.disabled;
+// *! dark mode /////////////////////////
+
+const toggleIcon = document.getElementById("toggle-icon");
+const toggleSwitch = document.querySelector('input[type="checkbox"]');
+console.log(toggleIcon);
+console.log(toggleSwitch);
+
+// Dark Mode Styles
+function darkMode() {
+  toggleIcon.children[0].textContent = "Dark Mode";
+  toggleIcon.children[1].classList.replace("fa-sun", "fa-moon");
 }
 
-audioElement.addEventListener("ended", toggleButton);
+// Light Mode Styles
+function lightMode() {
+  toggleIcon.children[0].textContent = "Light Mode";
+  toggleIcon.children[1].classList.replace("fa-moon", "fa-sun");
+}
+
+function switchTheme(event) {
+  if (event.target.checked) {
+    document.documentElement.setAttribute("data-theme", "dark");
+    localStorage.setItem("theme", "dark");
+    darkMode();
+  } else {
+    document.documentElement.setAttribute("data-theme", "light");
+    localStorage.setItem("theme", "light");
+    lightMode();
+  }
+}
+
+toggleSwitch.addEventListener("change", switchTheme);
+// Check Local Storage For Theme
+const currentTheme = localStorage.getItem("theme");
+if (currentTheme) {
+  document.documentElement.setAttribute("data-theme", currentTheme);
+
+  if (currentTheme === "dark") {
+    toggleSwitch.checked = true;
+    darkMode();
+  }
+}
