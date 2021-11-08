@@ -40,10 +40,11 @@ body {
   background-color: var(--background);
 }
 
-h1{
+h1 {
   position: absolute;
   top: 4rem;
-  font-size: 3.3rem
+  font-size: 3.3rem;
+  color: var(--secondary-color);
 }
 
 /* Dark Mode Toggle */
@@ -234,14 +235,13 @@ button:active {
     font-size: 1.3rem;
     text-align: center;
   }
-  h1{
+  h1 {
     font-size: 2.5rem;
   }
 
   .fa-twitter {
     font-size: 1.3rem;
   }
-  
 
   .fa-quote-left {
     font-size: 2rem;
